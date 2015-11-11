@@ -65,7 +65,7 @@ def login():
 def logcheck():
     user = mysql.fetch("SELECT * FROM users \
                         WHERE email = '{}' LIMIT 1".format(request.form['email']))
-    if len(user) < 0:
+    if len(user) == 0:
       flash('Email not in database. Please register.')
       return render_template('index.html')
     else:
