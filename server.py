@@ -20,7 +20,7 @@ def reg():
   session['first_name']   = request.form['first_name']
   session['last_name']    = request.form['last_name']
   session['email']        = request.form['email']
-  session['password']     = request.form['password']
+  password                = request.form['password']
   confirm                 = request.form['confirm']
 
   if not NAME_REGEX.match(session['first_name']):
@@ -34,7 +34,7 @@ def reg():
   if not EMAIL_REGEX.match(session['email']):
     flash('Not a valid email.')
     counter += 1
-  if session['password'] != confirm:
+  if password != confirm:
     flash("Confirmation does not match Password, please re-enter.")
     counter += 1
   elif len(request.form['password']) < 8:
@@ -44,21 +44,48 @@ def reg():
     return redirect('/')
   else:
     check = mysql.fetch("SELECT email FROM users \
-                        WHERE id = '{}'".format(session['email']))
+                        WHERE email = '{}'".format(session['email']))
     if len(check) > 0:
       flash('That email is already in the database.  Please login.')
-      return render_template('/')
+      return render_template('index.html')
     else:
-      pw_hash = bcrypt.generate_password_hash(session['password'])
+
       insert = "INSERT INTO users \
                 (first_name, last_name, email, pw_digest, created_at, updated_at) \
                 VALUES ('{}','{}','{}','{}', NOW(), NOW())".format(session['first_name'], session['last_name'], session['email'], pw_hash)
       mysql.run_mysql_query(insert)
-      return 'Check database'
+      flash('Welcome to the machine.')
+      return redirect('/users')
 
 @app.route('/login')
 def login():
   return render_template('login.html')
+
+@app.route('/login', methods=['POST'])
+def logcheck():
+    user = mysql.fetch("SELECT * FROM users \
+                        WHERE email = '{}' LIMIT 1".format(request.form['email']))
+    if len(user) < 0:
+      flash('Email not in database. Please register.')
+      return render_template('index.html')
+    else:
+      if bcrypt.check_password_hash(user[0]['pw_digest'], request.form['password']):
+        flash('Welcome back!')
+        return redirect('/users')
+      else:
+        flash('Email and/or Password not correct')
+        return redirect('/login')
+
+@app.route('/users')
+def users():
+  users = mysql.fetch("SELECT first_name, last_name, email, created_at \
+                       FROM users")
+  return render_template('users.html', users = users)
+
+@app.route('/logout')
+def logout():
+  session.clear()
+  return redirect('/')
 
 app.run(debug=True)
 

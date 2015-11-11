@@ -29,3 +29,19 @@ input {
   text-align: center;
   width: 185px;
 }
+
+table {
+  width: 600px;
+  margin: 0px auto;
+  background: gray;
+  padding: 25px;
+}
+
+th {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+h3 {
+  margin-top: 20px;
+}
