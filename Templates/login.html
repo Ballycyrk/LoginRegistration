@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/style.css') }}">
+  </head>
+  <body>
+    <div id="container">
+      <h1>Welcome Back to Nothing At All</h1>
+      <br>
+      <h2>Login Here:</h2>
+      <form action='/login' method='post'>
+        <label>Email Address:
+        <input type='text' name='email' placeholder='Email Address'>
+        </label>
+        <label>Password:
+        <input type='password' name='password' placeholder='Password'>
+        </label>
+        <input type='submit' value='Join the Void'>
+      </form>
+    </div>
+  </body>
+</html>

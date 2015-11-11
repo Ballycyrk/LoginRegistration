@@ -2,12 +2,42 @@
 <html lang='en'>
   <head>
     <meta charset='utf-8'>
-    <title>Index</title>
+    <title>Welcome</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/style.css') }}">
   </head>
   <body>
     <div id="container">
-
+      <h1>Welcome to Registration for Nothing At All</h1>
+      <h2>It's a database with names of people just like you!</h2>
+      <br>
+      <h2>Want to join?  Fill in the following:</h2>
+      <form action='/register' method='post'>
+        <label>First Name:
+          <input type='text' name='first_name' placeholder='First Name'>
+        </label>
+        <label>Last Name:
+          <input type='text' name='last_name' placeholder='Last Name'>
+        </label>
+        <label>Email Address:
+          <input type='text' name='email' placeholder='Email Address'>
+        </label>
+        <label>Password:
+          <input type='password' name='password' placeholder='Email Address'>
+        </label>
+        <label>Confirm Email:
+          <input type='password' name='confirm' placeholder='Email Address'>
+        </label>
+        <input type='submit' value='Join the Void'>
+      </form>
+      <br>
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+          <p>{{ message }}</p>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+      <h3>Already a member? <a href="/login">Log in here.</a> </h3>
     </div>
   </body>
 </html>

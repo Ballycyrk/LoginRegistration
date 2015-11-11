@@ -6,4 +6,26 @@
 #container {
   width: 970px;
   margin: 0px auto;
+  padding: 30px;
+  text-align: center;
+  font-family: fantasy;
+}
+
+form {
+  width: 500px;
+  margin: 0px auto;
+  background: gray;
+  padding: 25px;
+}
+
+label {
+  display: block;
+  text-align: right;
+}
+
+input {
+  padding: 0px 80px;
+  margin-left: 40px;
+  text-align: center;
+  width: 185px;
 }
